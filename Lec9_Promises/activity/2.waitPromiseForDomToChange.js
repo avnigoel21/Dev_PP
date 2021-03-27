@@ -10,7 +10,6 @@ let browserOpenPromise = puppeteer.launch({
   headless: false,
   defaultViewport: null,
   args: ["--start-maximized"],
-  slowMo : 100
 });
 // Promise<Pending>
 
@@ -39,19 +38,17 @@ browserOpenPromise
     ); //navigation => page change
     return loginPromise;
   })
-  .then(function(){
-    waitAndClick('#base-card-1-link');
+  
+  .then(function () {
+    let waitPromise = tab.waitForSelector('#base-card-1-link' , {visible:true});
+    return waitPromise;
+    // Promise<Pending>
   })
-  // .then(function () {
-  //   let waitPromise = tab.waitForSelector('#base-card-1-link' , {visible:true});
-  //   return waitPromise;
-  //   // Promise<Pending>
-  // })
-  // .then(function () {
-  //   // console.log("logged in to hackerrank !!!");
-  //   let ipKitClickedPromise = tab.click("#base-card-1-link"); // navigation
-  //   return ipKitClickedPromise;
-  // })
+  .then(function () {
+    // console.log("logged in to hackerrank !!!");
+    let ipKitClickedPromise = tab.click("#base-card-1-link"); // navigation
+    return ipKitClickedPromise;
+  })
   .then(function () {
     let waitPromise = tab.waitForSelector('a[data-attr1="warmup"]' , {visible:true});
     return waitPromise;
@@ -67,7 +64,3 @@ browserOpenPromise
     console.log(error);
   });
 
-function waitAndClick(selector){
-// wait 
-// click
-}

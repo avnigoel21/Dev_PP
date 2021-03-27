@@ -1,3 +1,5 @@
+//THIS FILE IS BECAUSE OF REPEATED CODE IN waitPromiseForDomToChange FILE
+
 const puppeteer = require("puppeteer");
 const id = "savob68663@bombaya.com";
 const pw = "123456789";
@@ -10,7 +12,6 @@ let browserOpenPromise = puppeteer.launch({
   headless: false,
   defaultViewport: null,
   args: ["--start-maximized"],
-  slowMo : 100
 });
 // Promise<Pending>
 
@@ -40,25 +41,12 @@ browserOpenPromise
     return loginPromise;
   })
   .then(function(){
-    waitAndClick('#base-card-1-link');
-  })
-  // .then(function () {
-  //   let waitPromise = tab.waitForSelector('#base-card-1-link' , {visible:true});
-  //   return waitPromise;
-  //   // Promise<Pending>
-  // })
-  // .then(function () {
-  //   // console.log("logged in to hackerrank !!!");
-  //   let ipKitClickedPromise = tab.click("#base-card-1-link"); // navigation
-  //   return ipKitClickedPromise;
-  // })
-  .then(function () {
-    let waitPromise = tab.waitForSelector('a[data-attr1="warmup"]' , {visible:true});
-    return waitPromise;
+    let waitAndClickPromise = waitAndClick('#base-card-1-link');
+    return waitAndClickPromise; //Promise<Pending>
   })
   .then(function(){
-    let warmupClickedPromise = tab.click('a[data-attr1="warmup"]'); // navigation
-    return warmupClickedPromise;
+    let waitAndClickPromise = waitAndClick('a[data-attr1="warmup"]');
+    return waitAndClickPromise;
   })
   .then(function(){
     console.log("Reached Warmup Page !!!");
@@ -67,7 +55,20 @@ browserOpenPromise
     console.log(error);
   });
 
-function waitAndClick(selector){
-// wait 
-// click
-}
+
+  function waitAndClick(selector){
+    return new Promise(function(resolve , reject){
+      let waitPromise = tab.waitForSelector(selector , {visible:true});
+      waitPromise.then(function(){
+        let clickPromise = tab.click(selector);
+        return clickPromise;
+      })
+      .then(function(){
+        // wait and click succesfully done
+        resolve();
+      })
+      .catch(function(error){
+        reject(error);
+      })
+    });
+  }
