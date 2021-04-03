@@ -60,5 +60,5 @@ async function addChallenge(challenge , browser , createChallengeLink ){
     let newTab = await browser.newPage();
     newTab.goto(createChallengeLink);
 
-    
+    newTab.close();
 }
