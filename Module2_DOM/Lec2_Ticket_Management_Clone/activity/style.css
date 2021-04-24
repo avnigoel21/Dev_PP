@@ -5,9 +5,6 @@
   font-family: 'Lato', sans-serif;
 }
 
-.content {
-}
-
 .header {
   height: 15vh;
   background: #34495e;
@@ -153,9 +150,6 @@
   background: white;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-}
-
-.ticket div {
 }
 
 .ticket-filter {
