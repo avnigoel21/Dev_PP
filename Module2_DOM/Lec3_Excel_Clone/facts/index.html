@@ -8,13 +8,19 @@
 </head>
 <style>
     .cells{
-
+        height: calc( 100vh - 150px);
+        /* background: lightgreen; */
+        overflow: auto;
+        position: relative;
     }
     .row{
-
+        display: flex;
     }
     .cell{
-        
+        border: 1px solid;
+        min-height: 30px;
+        min-width: 70px;
+        max-width: 70px;
     }
 </style>
 <body>
